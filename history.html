@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History</title>
+</head>
+<body>
+    <div id="Header">
+      <p id="home id">Makers Internet Banking</p>
+      <a href="Index.html">Home</a>
+    </div>
+    <div id="information"></div>
+    <div id="Tables">
+        <table>
+          <thead>
+            <tr>
+              <th>Datetime</th>
+              <th>Type of Transaction</th>
+              <th>Amount</th>
+              <th>Beneficiaries Account</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+        <script>
+            const urlParams = new URLSearchParams(window.location.search);
+            const accountId = urlParams.get('account_id');
+            const info = document.getElementById('information');
+            info.innerHTML = `<h1>Account ${accountId}</h1>`
+            async function getData() {
+                const response = await fetch(`http://127.0.0.1:5000/transaction/history/${accountId}`)
+                const data = await response.json()
+                const tbody = document.querySelector('tbody')
+                for (item of data) {
+                    const tr = document.createElement('tr');
+                    const datetime = document.createElement('td');
+                    const type_of_transaction = document.createElement('td');
+                    const amount = document.createElement('td');
+                    const beneficaries = document.createElement('td');
+
+                    datetime.innerHTML = `${item.datetime}`;
+                    type_of_transaction.innerHTML = `${item.type_of_transaction}`;
+                    amount.innerHTML = `${item.amount}`;
+                    beneficaries.innerHTML = `${item.destination}`;
+
+                    tr.append(datetime, type_of_transaction, amount, beneficaries);
+                    tbody.appendChild(tr)
+                    }
+                 console.log(data)
+            }
+            getData();
+        </script>
+        </div>
+</body>
+</html>
