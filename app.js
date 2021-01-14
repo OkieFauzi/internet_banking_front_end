@@ -27,7 +27,7 @@ async function getData(id) {
         account_id.innerHTML = `${item.account_id}`;
         balance.innerHTML = `${item.balance}`;
         status.innerHTML = `${item.status}`;
-        history.innerHTML = `<a href="history.html?account_id=${item.account_id}">history</a>`;
+        history.innerHTML = `<a href="history.html?account_id=${item.account_id}&balance=${item.balance}">history</a>`;
         history.id = `history_account${item.account_id}`;
 
         tr.append(account_id, balance, status, history);

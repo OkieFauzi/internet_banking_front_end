@@ -6,9 +6,14 @@
     <title>History</title>
 </head>
 <body>
-    <div id="Header">
-      <p id="home id">Makers Internet Banking</p>
+    <div class="header">
+      <p id="home_id">Makers Internet Banking</p>
+      <p id="user_name"></p>
+      <input type="image" src="images/transparent-log-out-icon-logout-icon-social-media-icon-5e73f6ae3b8046.5560975015846580942437.png" id="logout" name="logout" width="100" height="48" alt="submit">
+    </div>
+    <div class="menu">
       <a href="Index.html">Home</a>
+      <a href="">Transfer</a>
     </div>
     <div id="information"></div>
     <div id="Tables">
@@ -25,10 +30,42 @@
           </tbody>
         </table>
         <script>
+            const getToken = localStorage.getItem('token');
+            let logout = document.getElementById('logout');
+            logout.addEventListener("click", function(e) {
+                e.preventDefault();
+
+                const data = {token : getToken}
+
+                fetch('http://127.0.0.1:5000/logout', {
+                    method : 'DELETE',
+                    headers : {
+                        'Content-Type' : 'application/json',
+                    },
+                    body : JSON.stringify(data),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log({status : data["status"], token : data["token"]})
+                    localStorage.removeItem('token')
+                    window.location.href = 'login.html'
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                })
+
+            })
+
             const urlParams = new URLSearchParams(window.location.search);
             const accountId = urlParams.get('account_id');
+            const balance = urlParams.get('balance');
+            
             const info = document.getElementById('information');
+            const balance_info = document.createElement('h4')
+            balance_info.innerHTML = `Balance : ${balance}`;
             info.innerHTML = `<h1>Account ${accountId}</h1>`
+            info.appendChild(balance_info)
+
             async function getData() {
                 const response = await fetch(`http://127.0.0.1:5000/transaction/history/${accountId}`)
                 const data = await response.json()
