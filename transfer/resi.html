@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resi</title>
+    <link href="../css/style.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+    <div class="header">
+        <p id="home id" class="logo">Makers Internet Banking</p>
+        <p id="user_name" class="user_name"></p>
+        <input type="image" src="../images/transparent-log-out-icon-logout-icon-social-media-icon-5e73f6ae3b8046.5560975015846580942437.png" id="logout" name="logout" height="30" alt="submit" class="logout">
+      </div>
+      <div class="menu">
+        <nav>
+          <ul class="nav_links">
+            <li><a href="Index.html">Home</a></li>
+            <li><a href="transfer/index.html">Transfer</a></li>
+          </ul>
+        </nav>
+      </div>
+    <div class="title">
+        <h1>Receipt</h1>
+    </div>
+    <div class="resi">
+        <table>
+            <tr>
+                <td>Transaction Status :</td>
+                <td id="transaction_status"></td>
+            </tr>
+            <tr>
+                <td>Transfer From :</td>
+                <td id="source"></td>
+            </tr>
+            <tr>
+                <td>Transfer To</td>
+                <td id="destination"></td>
+            </tr>
+            <tr>
+                <td>Amount :</td>
+                <td id="amount"></td>
+            </tr>
+            <tr>
+                <td>Date and time :</td>
+                <td id="datetime"></td>
+            </tr>
+        </table>
+        <input type="button" onclick="location.href='../index.html';" value="Home">
+    </div>
+    <script src="../header.js"></script>
+    <script>
+        //get api element from search parameter
+        const urlParams= new URLSearchParams(window.location.search);
+        const account_source = urlParams.get('source');
+        const destination = urlParams.get('destination');
+        const tbamount = urlParams.get('amount');
+        const data = {account_destination : destination, amount : tbamount}
+        //create get name funtion using api
+        async function getNames(id, table_source) {
+            //fetch data
+            const response = await fetch('http://127.0.0.1:5000/account_id/' + id);
+            const data = await response.json();
+            //get name and account_id
+            const name = `${data['first_name']} ${data['last_name']}`
+            //append to whatever it is
+            const table = document.getElementById(table_source);
+            table.textContent = name + ' - Account ' + id;
+        }
+        //call transfer api
+        fetch('http://127.0.0.1:5000/transaction/transfer/' + account_source, {
+            method : 'POST',
+            headers : {
+                'Content-Type' : 'application/json',
+            },
+            body : JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            //store result
+            const status = data['status'];
+            const account_destination = data['destination'];
+            const source = data['account_id'];
+            const datetime = data['datetime'];
+            const amount = data['amount'];
+            //append status to table
+            const status_table = document.getElementById('transaction_status');
+            status_table.textContent = status;
+            //append transfer from and destination to table
+            getNames(source, 'source');
+            getNames(account_destination, 'destination');
+            //append amount to table
+            const table_amount = document.getElementById('amount');
+            table_amount.textContent = 'IDR ' + amount;
+            //append date to table
+            const table_date = document.getElementById('datetime')
+            table_date.textContent = datetime
+        })
+    </script>
+</body>
+</html>

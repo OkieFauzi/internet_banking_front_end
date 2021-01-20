@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmation</title>
+    <link href="../css/style.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+    <div class="header">
+        <p id="home id" class="logo">Makers Internet Banking</p>
+        <p id="user_name" class="user_name"></p>
+        <input type="image" src="../images/transparent-log-out-icon-logout-icon-social-media-icon-5e73f6ae3b8046.5560975015846580942437.png" id="logout" name="logout" height="30" alt="submit" class="logout">
+      </div>
+      <div class="menu">
+        <nav>
+          <ul class="nav_links">
+            <li><a href="Index.html">Home</a></li>
+            <li><a href="transfer/index.html">Transfer</a></li>
+          </ul>
+        </nav>
+      </div>
+    <div class="info">
+        <h1>Transaction Confirmation</h1>
+    </div>
+    <div class="content" id="content"></div>
+        <div class="info">
+            <table>
+                <tr>
+                    <td>Amount :</td>
+                    <td id="amount"></td>
+                </tr>
+            </table>
+            <form id='validation'>
+                <label for="password">Password :</label>
+                <input type="password" name="password" placeholder="Input your password">
+                <button type="button">Back</button>
+                <input type="submit" value="Next">
+            </form>
+        </div>
+    </div>
+    <script src="../header.js"></script>
+    <script>
+        const urlParams= new URLSearchParams(window.location.search);
+        const account_source = urlParams.get('source');
+        const account_destination = urlParams.get('destination');
+        const amount = urlParams.get('amount');
+
+        async function getNames(id, position) {
+            //select div content
+            const content = document.getElementById('content');
+            //fetch data
+            const response = await fetch('http://127.0.0.1:5000/account_id/' + id);
+            const data = await response.json();
+            //create new div
+            const box = document.createElement('div');
+            box.id = position;
+            //creat user status
+            const status = document.createElement('h2');
+            status.textContent = position;
+            //create name
+            const name = document.createElement('h3');
+            name.textContent = data['first_name'] + ' ' + data['last_name'];
+            //create account id
+            const account_number = document.createElement('h5');
+            account_number.textContent = 'Account ' + data['account_id'];
+            //append
+            box.append(name, account_number);
+            content.appendChild(box);
+        }
+        //call user caller function
+        getNames(account_source, 'sender');
+        getNames(account_destination, 'beneficiaries');
+        //add amount status
+        const amount_table = document.getElementById('amount');
+        amount_table.textContent = 'IDR ' + amount;
+        //password confirmation
+        const form = document.getElementById('validation');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const password = form.elements['password'].value;
+            fetch('http://127.0.0.1:5000/account_id/' + account_source)
+            .then(response => response.json())
+            .then(data => {
+                if (data['password'] !== password) {
+                    alert('wrong password')
+                } else {
+                    window.location.href = `resi.html?source=${account_source}&destination=${account_destination}&amount=${amount}`
+                }
+            })
+        })
+
+
+    </script>
+</body>
+</html>

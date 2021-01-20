@@ -4,31 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transfer</title>
+    <link href="../css/style.css" type="text/css" rel="stylesheet" />
+    <link href="../css/transfer-index.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
     <div class="header">
-        <p id="home id">Makers Internet Banking</p>
-        <p id="user_name"></p>
-        <input type="image" src="../images/transparent-log-out-icon-logout-icon-social-media-icon-5e73f6ae3b8046.5560975015846580942437.png" id="logout" name="logout" width="100" height="48" alt="submit">
+        <p id="home id" class="logo">Makers Internet Banking</p>
+        <p id="user_name" class="user_name"></p>
+        <input type="image" src="../images/transparent-log-out-icon-logout-icon-social-media-icon-5e73f6ae3b8046.5560975015846580942437.png" id="logout" name="logout" height="30" alt="submit" class="logout">
       </div>
-    <div class="menu" id>
-        <a href="../Index.html">Home</a>
-        <a href="index.html">Transfer</a>
-    </div>
-    <div class="info">
-        <img src="../images/bank-transfer.png" width="100" height="48" alt="transfer">
-        <h1>Transfer</h1>
-    </div>
-    <div class="form">
-        <form method="POST" id="transfer">
-            <p>Account Source :</p>
-            <select name="account_source" id="account_source"></select>
-            <p>Account Destination :</p>
-            <input type="text" name="destination" id="destination">
-            <p>Amount :</p>
-            <input type="text" name="amount" id="amount">
-            <input type="submit" name="continue" value="continue">
-        </form>
+      <div class="menu">
+        <nav>
+          <ul class="nav_links">
+            <li><a href="Index.html">Home</a></li>
+            <li><a href="transfer/index.html">Transfer</a></li>
+          </ul>
+        </nav>
+      </div>
+    <div class="content">
+      <div class="info">
+        <img src="../images/bank-transfer.png" width="100" height="48" alt="transfer" class="transfer-logo">
+        <h1 class="title">Transfer</h1>
+      </div>
+      <div class="form">
+          <form method="POST" id="transfer">
+              
+              <p>Account Source :</p>
+              <select name="account_source" id="account_source"></select>
+              <p>Account Destination :</p>
+              <input type="text" name="destination" id="destination">
+              <p>Amount :</p>
+              <input type="text" name="amount" id="amount">
+              <br><br>
+              <input type="submit" name="continue" value="continue">
+          </form>
+      </div>
     </div>
     <script src="app.js"></script>
 </body>

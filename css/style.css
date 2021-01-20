@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
+body {
+    font-family: "Montserrat", sans-serif;
+    display: grid;
+    grid-template-rows: 50px 50px 1fr;
+}
+
+.header, .menu {
+    display: flex;
+    background-color: #3244a8;
+    color: #edf0f1;
+    align-items: center;
+    padding: 30px 10%;
+}
+
+.header {
+    justify-content: flex-end;
+}
+
+.menu {
+    justify-content: flex-start;
+}
+
+.logo {
+    margin-right: auto;
+}
+
+li a {
+    font-weight: 500;
+    font-size: 16px;
+    color: #edf0f1;
+    text-decoration: none;
+}
+
+.nav_links {
+    list-style: none;
+}
+
+.nav_links li {
+    display: inline-block;
+    padding: 0px 20px;
+}
+
+.nav_links li a {
+    transition: all 0.3s ease 0s;
+}
+
+.nav_links li a:hover {
+    color: #0088a9;
+}
+
+.logout:hover {
+    color: rgba(0, 136, 169, 0.3);
+}
+
+.content-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    min-width: 400px;
+    border-radius: 5px 5px 0 0;
+    overflow:hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.content-table thead tr {
+    background-color: #3271a8;
+    color: white;
+    text-align: left;
+    font-weight: bold;
+}
+
+.content-table th, 
+.content-table td {
+    padding: 12px 15px;
+}
+
+.content-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.content-table tbody tr:nth-of-type(even) {
+    background-color: rgba(171, 205, 239, 0.3);
+}
+
+.content-table tbody tr:last-of-type {
+    border-bottom: 2px solid #3271a8;
+}
+
+.user_name {
+    margin-right: 10px;
+}

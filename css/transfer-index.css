@@ -1,0 +1,27 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    position: relative;
+    top: 50px;
+    left: 20px;
+}
+
+.info {
+    display: flex;
+    align-items: center;
+}
+
+.form-align {
+    display: flex;
+}
+
+.transfer-logo {
+    margin-right: 10px;
+}
+
+.source-title {
+    float: left;
+}
+

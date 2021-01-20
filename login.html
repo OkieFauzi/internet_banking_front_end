@@ -4,21 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link type="text/css" rel="stylesheet" href="css/login-style.css" />
 </head>
 <body>
-    <header>
-        <div id="header">
-            <h4>Makers Internet Banking</h4>
-        </div>
-    </header>
-    <div id="login">
+    <div class="login">
+        <img src="images/avatar.png" class="avatar">
+        <h1>Makers Internet Banking</h1>
         <form action="" method="POST" id="signin">
             <p>Id</p>
             <input type="text" name="id" placeholder="Input your user ID">
             <p>Password</p>
             <input type="password" name="password" placeholder="Input your password">
-            <br><br>
-            <input type="submit" value="login">
+            <input type="submit" value="Login">
         </form>
     </div>
     <script>
@@ -40,9 +37,17 @@
             })
             .then(response => response.json())
             .then(data => {
-                localStorage.setItem('token', data["token"]);
-                console.log('Token:', localStorage.getItem('token'))
-                window.location.href = `index.html?token=${localStorage.getItem('token')}`
+                if (data['status'] === 'aborted') {
+                    if (data['reason'] === "id not registered") {
+                        alert('id not registered')
+                    } else {
+                        alert("password is not correct")
+                    }
+                } else {
+                    localStorage.setItem('token', data["token"]);
+                    console.log('Token:', localStorage.getItem('token'))
+                    window.location.href = `index.html?token=${localStorage.getItem('token')}`
+                }
             })
             .catch((error) => {
                 console.error('Error:', error);

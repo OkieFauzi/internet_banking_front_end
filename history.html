@@ -4,20 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>History</title>
+    <link href="css/style.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
     <div class="header">
-      <p id="home_id">Makers Internet Banking</p>
-      <p id="user_name"></p>
-      <input type="image" src="images/transparent-log-out-icon-logout-icon-social-media-icon-5e73f6ae3b8046.5560975015846580942437.png" id="logout" name="logout" width="100" height="48" alt="submit">
+      <p id="home id" class="logo">Makers Internet Banking</p>
+      <p id="user_name" class="user_name"></p>
+      <input type="image" src="images/transparent-log-out-icon-logout-icon-social-media-icon-5e73f6ae3b8046.5560975015846580942437.png" id="logout" name="logout" height="30" alt="submit" class="logout">
     </div>
     <div class="menu">
-      <a href="Index.html">Home</a>
-      <a href="">Transfer</a>
+      <nav>
+        <ul class="nav_links">
+          <li><a href="Index.html">Home</a></li>
+          <li><a href="transfer/index.html">Transfer</a></li>
+        </ul>
+      </nav>
     </div>
     <div id="information"></div>
     <div id="Tables">
-        <table>
+        <table class="content-table">
           <thead>
             <tr>
               <th>Datetime</th>
@@ -29,40 +34,15 @@
           <tbody>
           </tbody>
         </table>
+        <script src="header.js"></script>
         <script>
-            const getToken = localStorage.getItem('token');
-            let logout = document.getElementById('logout');
-            logout.addEventListener("click", function(e) {
-                e.preventDefault();
-
-                const data = {token : getToken}
-
-                fetch('http://127.0.0.1:5000/logout', {
-                    method : 'DELETE',
-                    headers : {
-                        'Content-Type' : 'application/json',
-                    },
-                    body : JSON.stringify(data),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log({status : data["status"], token : data["token"]})
-                    localStorage.removeItem('token')
-                    window.location.href = 'login.html'
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                })
-
-            })
-
             const urlParams = new URLSearchParams(window.location.search);
             const accountId = urlParams.get('account_id');
             const balance = urlParams.get('balance');
             
             const info = document.getElementById('information');
             const balance_info = document.createElement('h4')
-            balance_info.innerHTML = `Balance : ${balance}`;
+            balance_info.innerHTML = `Balance : IDR ${balance}`;
             info.innerHTML = `<h1>Account ${accountId}</h1>`
             info.appendChild(balance_info)
 
@@ -79,7 +59,7 @@
 
                     datetime.innerHTML = `${item.datetime}`;
                     type_of_transaction.innerHTML = `${item.type_of_transaction}`;
-                    amount.innerHTML = `${item.amount}`;
+                    amount.innerHTML = `IDR ${item.amount}`;
                     beneficaries.innerHTML = `${item.destination}`;
 
                     tr.append(datetime, type_of_transaction, amount, beneficaries);

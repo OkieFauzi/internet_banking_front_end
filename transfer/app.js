@@ -44,36 +44,55 @@ async function getData(id) {
             const option = document.createElement('option');
             const account_source = document.getElementById('account_source');
             option.value = `${item.account_id},${item.balance}`;
-            option.innerHTML = 'Account ' + item.account_id + ' - Balance ' + item.balance;
+            option.innerHTML = 'Account ' + item.account_id + ' - Balance IDR ' + item.balance;
             account_source.appendChild(option)
         }
     }
     console.log(data)
 }
 
+async function getName(id) {
+    const response = await fetch('http://127.0.0.1:5000/user/all')
+    const data = await response.json()
+    const name = document.getElementById('user_name');
+    for (item of data) {
+        if (id == item.user_id) {
+            name.innerHTML = item.first_name + " " + item.last_name;
+        }
+    }
+}
+
 const user_id = getUser();
 user_id.then((id) => {
     getData(id)
+    getName(id)
 })
 
-let form = getElementById('transfer');
-const selected = document.getElementById('transfer').value;
-const value = selected.split(",");
-const account_id = number(value[0]);
-const balance = number(value[1]);
+let form = document.getElementById('transfer');
 form.addEventListener('submit', e => {
     e.preventDefault();
-    let amount = number(form.elements['amount']);
-    fetch('http://127.0.0.1:5000/account_id/' + account_id)
+    
+    const selected = document.getElementById('account_source').value;
+    const value = selected.split(",");
+    const account_id = parseInt(value[0]);
+    const balance = parseInt(value[1]);
+    const destination = parseInt(form.elements['destination'].value);
+    console.log('destination :', destination);
+    const amount = parseInt(form.elements['amount'].value);
+    fetch('http://127.0.0.1:5000/account_id/' + destination)
     .then(response => response.json())
     .then(data => {
+        console.log(data)
         if (data['status'] === 'closed') {
-            alert('Your Account Destination is closed')
-        } else if ((balance - amount) <= 50000) {
+            alert('Your account destination is closed')
+        } else if ((balance - amount) < 50000) {
             alert("Your balance is not sufficient")
         } else {
-            
+            window.location.href = `confirmation.html?source=${account_id}&destination=${destination}&amount=${amount}`;
         }
+    }).catch((error) => {
+        console.error('Error:', error);
+        alert("Your account destination is not registered")
     })
 
 })
