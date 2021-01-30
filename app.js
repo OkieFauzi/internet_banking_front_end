@@ -1,5 +1,6 @@
+//get token from local storage
 const getToken = localStorage.getItem('token');
-
+//function = get user_id
 async function getUser() {
     const response = await fetch('http://127.0.0.1:5000/login/all')
     const data = await response.json()
@@ -10,7 +11,7 @@ async function getUser() {
         }
     }
 }
-
+//function = get Full Name
 async function getName(id) {
     const response = await fetch('http://127.0.0.1:5000/user/all')
     const data = await response.json()
@@ -21,13 +22,11 @@ async function getName(id) {
         }
     }
 }
-
+//logout function
 let logout = document.getElementById('logout');
 logout.addEventListener("click", function(e) {
     e.preventDefault();
-
     const data = {token : getToken}
-
     fetch('http://127.0.0.1:5000/logout', {
         method : 'DELETE',
         headers : {
@@ -46,7 +45,7 @@ logout.addEventListener("click", function(e) {
     })
 
 })
-
+// table function index
 async function getData(id) {
     console.log(id)
     const response = await fetch('http://127.0.0.1:5000/account/' + id)
@@ -71,7 +70,7 @@ async function getData(id) {
     }
     console.log(data)
 }
-
+//call function
 const user_id = getUser();
 user_id.then((id) => {
     getData(id)

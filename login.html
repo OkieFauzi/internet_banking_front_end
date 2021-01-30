@@ -19,15 +19,15 @@
         </form>
     </div>
     <script>
+        //listen to form sign in
         let form = document.getElementById('signin');
-
         form.addEventListener('submit', function(e) {
             e.preventDefault();
-
+            //input username and password variable
             let id = form.elements['id'];
             let tbpassword = form.elements['password'];
             const data = { user_id : parseInt(id.value), password : tbpassword.value}
-
+            //fetch api
             fetch('http://127.0.0.1:5000/login', {
                 method: 'POST',
                 headers : {
