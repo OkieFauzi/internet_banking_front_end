@@ -1,11 +1,10 @@
+//get token
 const getToken = localStorage.getItem('token');
-
+//logout function
 let logout = document.getElementById('logout');
 logout.addEventListener("click", function(e) {
     e.preventDefault();
-
     const data = {token : getToken}
-
     fetch('http://127.0.0.1:5000/logout', {
         method : 'DELETE',
         headers : {
@@ -23,7 +22,7 @@ logout.addEventListener("click", function(e) {
         console.error('Error:', error);
     })
 })
-
+//get user_id
 async function getUser() {
     const response = await fetch('http://127.0.0.1:5000/login/all')
     const data = await response.json()
@@ -34,7 +33,7 @@ async function getUser() {
         }
     }
 }
-
+//input account active to account source function
 async function getData(id) {
     console.log(id)
     const response = await fetch('http://127.0.0.1:5000/account/' + id)
@@ -50,7 +49,7 @@ async function getData(id) {
     }
     console.log(data)
 }
-
+//get name for nav bar function
 async function getName(id) {
     const response = await fetch('http://127.0.0.1:5000/user/all')
     const data = await response.json()
@@ -61,17 +60,16 @@ async function getName(id) {
         }
     }
 }
-
+//call the function
 const user_id = getUser();
 user_id.then((id) => {
     getData(id)
     getName(id)
 })
-
+//submit function
 let form = document.getElementById('transfer');
 form.addEventListener('submit', e => {
     e.preventDefault();
-    
     const selected = document.getElementById('account_source').value;
     const value = selected.split(",");
     const account_id = parseInt(value[0]);
